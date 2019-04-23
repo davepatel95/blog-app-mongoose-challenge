@@ -13,6 +13,7 @@ const app = express();
 app.use(express.json());
 
 app.get("/posts", (req, res) => {
+    console.log('Hello is this thing on?')
     Blogpost
         .find()
         .then(posts => {
