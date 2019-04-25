@@ -2,13 +2,22 @@
 
 const mongoose = require("mongoose");
 
+const authorSchema = mongoose.Schema({ 
+    firstName: 'string',
+    lastName: 'string',
+    userName: {
+        type: 'string',
+        unique: true
+    }
+});
+
+const commentSchema = mongoose.Schema({ content: 'string' });
+
 const blogPostSchema = mongoose.Schema({
     title: {type: String},
     content: {type: String},
-    author: {
-        firstName: String,
-        lastName: String
-    }
+    author: { type: mongoose.Schema.Types.ObjectId, ref: 'Author'},
+    comments: [commentSchema]
 });
 
 blogPostSchema.virtual("authorName").get(function () {
@@ -24,6 +33,7 @@ blogPostSchema.methods.serialize = function () {
     };
 };
 
-const Blogpost = mongoose.model("post", blogPostSchema);
+const Author = mongoose.model("Author", authorSchema);
+const BlogPost = mongoose.model("BlogPost", blogPostSchema);
 
-module.exports = { Blogpost };
+module.exports = { Author, BlogPost };
