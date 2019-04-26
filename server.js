@@ -10,6 +10,7 @@ const {PORT, DATABASE_URL} = require("./config");
 const {Author, BlogPost} = require("./models");
 
 const app = express();
+app.use(morgan('common'));
 app.use(express.json());
 
 //Authors endpoints
